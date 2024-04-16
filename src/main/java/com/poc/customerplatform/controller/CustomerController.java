@@ -1,5 +1,6 @@
 package com.poc.customerplatform.controller;
 
+import com.poc.customerplatform.model.CreateCustomerRequest;
 import com.poc.customerplatform.model.Customer;
 import com.poc.customerplatform.service.CustomerService;
 import jakarta.validation.Valid;
@@ -32,9 +33,11 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
-        //TODO
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest customerRequest) {
+        Customer newCustomer = customerService.createCustomer(customerRequest);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
+
+//    @PutMapping(/{"id"})
 }
