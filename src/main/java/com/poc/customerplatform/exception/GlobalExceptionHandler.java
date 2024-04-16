@@ -12,4 +12,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDuplicateEmail(DuplicateEmailException duplicateEmailException) {
         return new ResponseEntity<>(duplicateEmailException.getMessage(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public ResponseEntity<String> handleCustomerNotFound(CustomerNotFoundException customerNotFoundException) {
+        return new ResponseEntity<>(customerNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

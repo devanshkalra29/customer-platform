@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("customers")
@@ -27,9 +28,8 @@ public class CustomerController {
 
     @GetMapping("/email/{email}")
     public ResponseEntity<Customer> getCustomerByEmail(@RequestParam String email) {
-        return customerService.getCustomerByEmail(email)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+       Customer customer = customerService.getCustomerByEmail(email);
+        return ResponseEntity.ok(customer);
     }
 
     @PostMapping
@@ -39,5 +39,16 @@ public class CustomerController {
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
-//    @PutMapping(/{"id"})
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable UUID id, @Valid @RequestBody CreateCustomerRequest customerRequest) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customerRequest);
+
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable UUID id) {
+        customerService.deleteCustomer(id);
+       return ResponseEntity.noContent().build();
+    }
 }
