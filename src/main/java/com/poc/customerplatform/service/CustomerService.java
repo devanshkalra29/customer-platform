@@ -5,15 +5,17 @@ import com.poc.customerplatform.exception.DuplicateEmailException;
 import com.poc.customerplatform.model.CreateCustomerRequest;
 import com.poc.customerplatform.model.Customer;
 import com.poc.customerplatform.repository.CustomerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
 @Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -24,15 +26,24 @@ public class CustomerService {
     }
 
     public Customer getCustomerByEmail(String email){
-        Customer customer = customerRepository.findByEmail(email).orElseThrow(() -> new CustomerNotFoundException("Customer was not found"));
+        return customerRepository.findByEmail(email).orElseThrow(() -> {
+            logger.warn("Search for customer with email {} was not found", email);
+            return new CustomerNotFoundException("Customer with email " + email + " was not found");
+        });
+    }
 
-        return customer;
+    public Customer getCustomerById(UUID id) {
+        return customerRepository.findById(id).orElseThrow(() -> {
+            logger.warn("search for Customer with id {} was not found", id);
+            return new CustomerNotFoundException("Customer with id " + id + "not found");
+        });
     }
 
     public Customer createCustomer(CreateCustomerRequest customerRequest){
         customerRepository.findByEmail(customerRequest.getEmail())
                 .ifPresent(s -> {
-                    throw new DuplicateEmailException("Email already exists under another customer, please provide a new one");
+                    logger.warn("Creation of customer with email {} already exists, CREATE FAILED", customerRequest.getEmail());
+                    throw new DuplicateEmailException("Email " + customerRequest.getEmail() +" already exists under another customer, please provide a new one");
                 });
         Customer newCustomer = createAndConvertToModel(customerRequest);
 
@@ -42,13 +53,19 @@ public class CustomerService {
 
     public Customer updateCustomer(UUID id, CreateCustomerRequest customerRequest) {
 
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " was not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> {
+            logger.warn("Could not find customer with id {}, UPDATE FAILED", id);
+            return new CustomerNotFoundException("Customer with id " + id + " was not found");
+        });
         updateCustomer(customerRequest, customer);
         return customerRepository.save(customer);
     }
 
     public void deleteCustomer(UUID id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " was not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() ->{
+            logger.warn("Could not find customer with id {}, DELETE FAILED", id);
+            return new CustomerNotFoundException("Customer with id " + id + " was not found");
+        });
 
         customerRepository.delete(customer);
     }

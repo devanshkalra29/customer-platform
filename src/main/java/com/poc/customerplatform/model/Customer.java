@@ -11,20 +11,25 @@ import java.util.UUID;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID customerId;
 
     String prefix;
     String suffix;
 
     @NotBlank(message = "A first name is required")
+    @Column(name = "first_name")
     String firstName;
+
+    @Column(name="middle_name")
     String middleName;
     @NotBlank(message = "A last name is required")
+    @Column(name = "last_name")
     String lastName;
     @Email(message = "A valid email is required")
     @NotBlank(message = "Email is required")
     String email;
+    @Column(name = "phone_number")
     String phoneNumber;
 
     //needed for JPA
