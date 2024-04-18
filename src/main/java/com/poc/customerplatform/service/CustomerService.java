@@ -7,12 +7,16 @@ import com.poc.customerplatform.model.Customer;
 import com.poc.customerplatform.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 @Service
 public class CustomerService {
+
+    @Autowired
+    MetricsService metricsService;
 
     private final CustomerRepository customerRepository;
     private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
@@ -47,6 +51,8 @@ public class CustomerService {
                 });
         Customer newCustomer = createAndConvertToModel(customerRequest);
 
+        metricsService.incrementCustomerCreatedCounter();
+
         return customerRepository.save(newCustomer);
 
     }
@@ -66,7 +72,7 @@ public class CustomerService {
             logger.warn("Could not find customer with id {}, DELETE FAILED", id);
             return new CustomerNotFoundException("Customer with id " + id + " was not found");
         });
-
+        metricsService.incrementCustomerDeletedCounter();
         customerRepository.delete(customer);
     }
 
