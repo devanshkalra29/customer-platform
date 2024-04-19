@@ -6,11 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
 @SpringBootTest
-class LoadContextTest extends Specification {
+class LoadContextSpec extends Specification {
 
 
     def "application context loads"() {
-        expect: "customer-platform context loads without errorss"
+        expect: "customer-platform context loads without errors"
         true
     }
 }

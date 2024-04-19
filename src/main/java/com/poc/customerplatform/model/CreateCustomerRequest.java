@@ -21,7 +21,7 @@ public class CreateCustomerRequest {
 
     public CreateCustomerRequest(String prefix, String suffix, String firstName, String middleName, String lastName, String email, String phoneNumber) {
         this.prefix = prefix;
-        this. suffix = suffix;
+        this.suffix = suffix;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;

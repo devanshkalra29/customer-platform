@@ -1,0 +1,22 @@
+[
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "prefix": "Mr",
+    "suffix": null,
+    "firstName": "Johnny",
+    "middleName": null,
+    "lastName": "Appleseed",
+    "email": "johnny.appleseed@test.com",
+    "phoneNumber": "1234565678"
+  },
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174001",
+    "prefix": null,
+    "suffix": null,
+    "firstName": "Jane",
+    "middleName": null,
+    "lastName": "Johnson",
+    "email": "jane.johnson@test.com",
+    "phoneNumber": "2345678910"
+  }
+]

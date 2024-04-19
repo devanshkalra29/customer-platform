@@ -15,14 +15,14 @@ import java.util.UUID;
 @Service
 public class CustomerService {
 
-    @Autowired
     MetricsService metricsService;
-
     private final CustomerRepository customerRepository;
     private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
-    public CustomerService(CustomerRepository customerRepository) {
+    @Autowired
+    public CustomerService(CustomerRepository customerRepository, MetricsService metricsService) {
         this.customerRepository = customerRepository;
+        this.metricsService = metricsService;
     }
 
     public List<Customer> getAllCustomers() {
@@ -63,7 +63,7 @@ public class CustomerService {
             logger.warn("Could not find customer with id {}, UPDATE FAILED", id);
             return new CustomerNotFoundException("Customer with id " + id + " was not found");
         });
-        updateCustomer(customerRequest, customer);
+        updateFields(customerRequest, customer);
         return customerRepository.save(customer);
     }
 
@@ -89,7 +89,7 @@ public class CustomerService {
         return customer;
     }
 
-    private void updateCustomer(CreateCustomerRequest customerRequest, Customer customer) {
+    private void updateFields(CreateCustomerRequest customerRequest, Customer customer) {
         customer.setPrefix(customerRequest.getPrefix());
         customer.setSuffix(customerRequest.getSuffix());
         customer.setMiddleName(customerRequest.getMiddleName());
