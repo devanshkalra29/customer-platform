@@ -26,6 +26,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.h2database:h2'
 }
+bootJar {
+	archiveBaseName = 'customer-platform'
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
