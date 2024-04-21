@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/customers/v1")
 public class CustomerController {
 
     private static Logger logger = LoggerFactory.getLogger(CustomerController.class);
