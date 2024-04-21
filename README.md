@@ -14,7 +14,7 @@ Customer Platform is a RESTFUL web service that is designed to manage customer d
 ### Monitoring with Datadog
 Customer Platform uses performance and usage metrics that are monitored using Datadog, which provides real-time observability and operational insights.
 
-### Kubernetes Ready with Helm
+### Kubernetes-Ready with Helm
 Deployment configurations are managed via Helm Charts, which helps simplify deployments across Kubernetes environments
 
 
@@ -24,6 +24,7 @@ Deployment configurations are managed via Helm Charts, which helps simplify depl
 - **JPA/Hibernate** - for ORM and database interaction
 - [**Gradle**](https://docs.gradle.org/current/userguide/userguide.html) - Build automation tool
 - [**H2 Database**](https://www.h2database.com/html/main.html) - for a lightweight, in-memory database that doesn't need a server setup (mainly used since this is a POC)
+- [**Docker**](https://docs.docker.com/) - Used to build, deploy, run and manage containers
 - [**Datadog**](https://docs.datadoghq.com/) - Used to monitor applications, track their performance, and creating dashboards for operational insights.
 - [**Helm**](https://helm.sh/docs/) - Used to manage Kubernetes applications through Helm charts.
 - [**Spock**](https://helm.sh/docs/) - Testing framework for Java and Groovy applications
@@ -32,11 +33,31 @@ Deployment configurations are managed via Helm Charts, which helps simplify depl
 ### Prerequisites:
 - JDK 17 or later
 - Gradle 7+
-- IDE such as IntelliJ or Eclipse
+- IDE such as IntelliJ for ease of use
 
 ### Installation
-Go ahead and clone the repo:
+1. Go ahead and clone the repo:
 `git@github.com:devanshkalra29/customer-platform.git`
+2. build via terminal using `./gradlew build`or in intelliJ using the [gradle tools window](https://www.jetbrains.com/help/idea/jetgradle-tool-window.html)
+
+### API Endpoints:
+All the API endpoints are defined in the **CustomerController** class:
+
+| Method | URL                    | Description | Parameters                 | Request Body Example                                                                                                                                                |
+|--------|------------------------|---          |----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ | GET    | `/customers/v1/`       | Retrieves all customers | -                          | -                                                                                                                                                                   |
+ | GET    | `/customers/v1/{id}`   | Retrieves a customer by ID | `id`: UUID of the customer | -                                                                                                                                                                   |
+ | GET    | `/customers/v1/search` | Retrieves a customer by email | `email`: email of the customer  | -                                                                                                                                                                   |
+ | PUT    | `/customers/v1/{id}`   | Updates details of an existing customer by Id | `id`: UUID of the customer | `{"prefix" : "Mr.","firstName": "John","middleName": "Allen","lastName": "Johnson","suffix": "Sr","email": "john.johnson@example.com","phoneNumber": "1234567890" }` |
+ | POST   | `/customers/v1/`       | Adds a new customer record to the database    | - | `{"prefix" : "Mr.","firstName": "John","middleName": "Allen","lastName": "Johnson","suffix": "Sr","email": "john.johnson@example.com","phoneNumber": "1234567890" }` |
+ | DELETE | `customers/v1/{id}    | Removes a customer record from the database | `id`: UUID of the customer | - |
+
+
+### Configuration
+
+
+
+
 
 
 
