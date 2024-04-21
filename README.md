@@ -66,7 +66,8 @@ in the application.properties file, you will find a basic H2 database configurat
 2. Once created, you will need to install a Datadog agent on the host where the application is running. Instructions can be found [here](https://docs.datadoghq.com/getting_started/agent/).
 3. Create an API Key and Application (APP) Key via your Datadog account.
 4. add both you API key and APP key to your environment variables in IntelliJ or System. The applications.properties file already has placeholders for these names below (example for intelliJ setup shown).
-![](../../../../var/folders/z9/xw486v412pn7bjjjfvxybtx80000gn/T/TemporaryItems/NSIRD_screencaptureui_EMU6i6/Screenshot 2024-04-21 at 5.45.24 PM.png)
+<img width="497" alt="Screenshot 2024-04-21 at 6 13 04 PM" src="https://github.com/devanshkalra29/customer-platform/assets/112348374/8b05c5ec-4095-4bd6-aa6c-69ab261f4bb2">
+
 
 
 ### Docker & Helm Chart
