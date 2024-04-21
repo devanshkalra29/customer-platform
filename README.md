@@ -44,14 +44,14 @@ Deployment configurations are managed via Helm Charts, which helps simplify depl
 ### API Endpoints:
 All the API endpoints are defined in the **CustomerController** class:
 
-| Method | URL                    | Description | Parameters                 | Request Body Example                                                                                                                                                |
-|--------|------------------------|---          |----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- | GET    | `/customers/v1/`       | Retrieves all customers | -                          | -                                                                                                                                                                   |
- | GET    | `/customers/v1/{id}`   | Retrieves a customer by ID | `id`: UUID of the customer | -                                                                                                                                                                   |
+| Method | URL                   | Description | Parameters                 | Request Body Example                                                                                                                                                |
+|--------|-----------------------|---          |----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ | GET    | `/customers/v1/`      | Retrieves all customers | -                          | -                                                                                                                                                                   |
+ | GET    | `/customers/v1/{id}`  | Retrieves a customer by ID | `id`: UUID of the customer | -                                                                                                                                                                   |
  | GET    | `/customers/v1/search` | Retrieves a customer by email | `email`: email of the customer  | -                                                                                                                                                                   |
- | PUT    | `/customers/v1/{id}`   | Updates details of an existing customer by Id | `id`: UUID of the customer | `{"prefix" : "Mr.","firstName": "John","middleName": "Allen","lastName": "Johnson","suffix": "Sr","email": "john.johnson@example.com","phoneNumber": "1234567890" }` |
- | POST   | `/customers/v1/`       | Adds a new customer record to the database    | - | `{"prefix" : "Mr.","firstName": "John","middleName": "Allen","lastName": "Johnson","suffix": "Sr","email": "john.johnson@example.com","phoneNumber": "1234567890" }` |
- | DELETE | `customers/v1/{id}`    | Removes a customer record from the database | `id`: UUID of the customer | - |
+ | PUT    | `/customers/v1/{id}`  | Updates details of an existing customer by Id | `id`: UUID of the customer | `{"prefix" : "Mr.","firstName": "John","middleName": "Allen","lastName": "Johnson","suffix": "Sr","email": "john.johnson@example.com","phoneNumber": "1234567890" }` |
+ | POST   | `/customers/v1`       | Adds a new customer record to the database    | - | `{"prefix" : "Mr.","firstName": "John","middleName": "Allen","lastName": "Johnson","suffix": "Sr","email": "john.johnson@example.com","phoneNumber": "1234567890" }` |
+ | DELETE | `customers/v1/{id}`   | Removes a customer record from the database | `id`: UUID of the customer | - |
 
 
 ### Configuration
@@ -78,7 +78,7 @@ Under the **src/main** directory, there are Unit tests written using Spock. in t
 
 
 ## Contact
-please email the author at devanshkalra29@gmail.com with and questions!
+please email the author at devanshkalra29@gmail.com with any questions!
 
 
 

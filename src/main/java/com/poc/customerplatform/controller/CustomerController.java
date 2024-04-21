@@ -44,7 +44,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest customerRequest) {
         logger.info("Received request to create new customer: {}", customerRequest);
         Customer newCustomer = customerService.createCustomer(customerRequest);
