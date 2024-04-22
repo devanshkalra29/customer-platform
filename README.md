@@ -12,7 +12,7 @@ Customer Platform is a RESTFUL web service that is designed to manage customer d
 - *Get All Customers*: Retrieves all customers from the database
 
 ### Monitoring with Datadog
-Customer Platform uses performance and usage metrics that are monitored using Datadog, which provides real-time observability and operational insights.
+Customer Platform uses performance and usage metrics that are monitored using Datadog, which provides real-time observability and operational insights. A couple basic metrics that were added in this web service (currently) are when customers are created and deleted, as well as # of requests via dashboards.
 
 ### Kubernetes-Ready with Helm
 Deployment configurations are managed via Helm Charts, which helps simplify deployments across Kubernetes environments.
