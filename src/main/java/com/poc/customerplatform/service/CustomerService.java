@@ -5,6 +5,7 @@ import com.poc.customerplatform.exception.DuplicateEmailException;
 import com.poc.customerplatform.model.CreateCustomerRequest;
 import com.poc.customerplatform.model.Customer;
 import com.poc.customerplatform.repository.CustomerRepository;
+import com.poc.customerplatform.utils.RequestToCustomerConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ public class CustomerService {
 
     MetricsService metricsService;
     private final CustomerRepository customerRepository;
+    RequestToCustomerConverter requestToCustomerConverter;
     private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, MetricsService metricsService) {
+    public CustomerService(CustomerRepository customerRepository, MetricsService metricsService, RequestToCustomerConverter requestToCustomerConverter) {
         this.customerRepository = customerRepository;
         this.metricsService = metricsService;
+        this.requestToCustomerConverter = requestToCustomerConverter;
     }
 
     public List<Customer> getAllCustomers() {
@@ -49,7 +52,7 @@ public class CustomerService {
                     logger.warn("Creation of customer with email {} already exists, CREATE FAILED", customerRequest.getEmail());
                     throw new DuplicateEmailException("Email " + customerRequest.getEmail() +" already exists under another customer, please provide a new one");
                 });
-        Customer newCustomer = createAndConvertToModel(customerRequest);
+        Customer newCustomer = requestToCustomerConverter.createAndConvertToModel(customerRequest);
 
         metricsService.incrementCustomerCreatedCounter();
 
@@ -63,7 +66,7 @@ public class CustomerService {
             logger.warn("Could not find customer with id {}, UPDATE FAILED", id);
             return new CustomerNotFoundException("Customer with id " + id + " was not found");
         });
-        updateFields(customerRequest, customer);
+       requestToCustomerConverter.updateFields(customerRequest, customer);
         return customerRepository.save(customer);
     }
 
@@ -74,28 +77,5 @@ public class CustomerService {
         });
         metricsService.incrementCustomerDeletedCounter();
         customerRepository.delete(customer);
-    }
-
-    private Customer createAndConvertToModel(CreateCustomerRequest customerRequest) {
-        Customer customer = new Customer();
-        customer.setPrefix(customerRequest.getPrefix());
-        customer.setSuffix(customerRequest.getSuffix());
-        customer.setMiddleName(customerRequest.getMiddleName());
-        customer.setFirstName(customerRequest.getFirstName());
-        customer.setLastName(customerRequest.getLastName());
-        customer.setEmail(customerRequest.getEmail());
-        customer.setPhoneNumber(customerRequest.getPhoneNumber());
-
-        return customer;
-    }
-
-    private void updateFields(CreateCustomerRequest customerRequest, Customer customer) {
-        customer.setPrefix(customerRequest.getPrefix());
-        customer.setSuffix(customerRequest.getSuffix());
-        customer.setMiddleName(customerRequest.getMiddleName());
-        customer.setFirstName(customerRequest.getFirstName());
-        customer.setLastName(customerRequest.getLastName());
-        customer.setEmail(customerRequest.getEmail());
-        customer.setPhoneNumber(customerRequest.getPhoneNumber());
     }
 }

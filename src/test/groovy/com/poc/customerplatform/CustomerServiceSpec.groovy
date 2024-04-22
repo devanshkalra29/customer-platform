@@ -7,6 +7,7 @@ import com.poc.customerplatform.model.Customer
 import com.poc.customerplatform.repository.CustomerRepository
 import com.poc.customerplatform.service.CustomerService
 import com.poc.customerplatform.service.MetricsService
+import com.poc.customerplatform.utils.RequestToCustomerConverter
 import groovy.json.JsonSlurper
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
@@ -19,7 +20,9 @@ class CustomerServiceSpec extends Specification {
 
     MetricsService metricsService = Mock(MetricsService)
 
-    def customerService = new CustomerService(customerRepository, metricsService)
+    RequestToCustomerConverter requestConverter = new RequestToCustomerConverter();
+
+    def customerService = new CustomerService(customerRepository, metricsService, requestConverter)
 
     def setup() {
         def json = new File("src/test/resources/mockCustomers.json").text

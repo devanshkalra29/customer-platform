@@ -35,6 +35,7 @@ Deployment configurations are managed via Helm Charts, which helps simplify depl
 - Gradle 7+
 - IDE such as IntelliJ for ease of use
 - kubectl/minikube setup
+- Docker installation
 
 ### Installation
 1. Clone the repo:
@@ -70,11 +71,30 @@ in the application.properties file, you will find a basic H2 database configurat
 
 
 
-### Docker & Helm Chart
+### Docker & Helm Chart Local Setup
+In order to utilize helm, please ensure that you have Minikube, kubectl and Docker installed (listed in the prerequisites). Let's walk through a **NodePort** setup. All the commands can be run via terminal
+
+**Docker**: 
+- run the command `./gradlew clean build` from your project directory, which will create a jar file in your `build/libs` folder.
+
+**Helm setup**:
+- the helm configuration files have already been created in this repo. If wanting to create again, you can delete the **helmchart** and re-generate the files using `helm create {name of folder}` in the project directory. 
+- In the **values.yaml** file
+  - In the image section: change repository value to "customer-platform" and tag as "latest".
+  - In the service section: change type to "NodePort", and port to 8080.
+
+**Minikube**:
+- When starting up minikube run `minikube start --driver=docker`
+- Run the command `eval$(minikube docker-env)`to set up the docker environment.
+- Run the command `docker build -t customer-platform .` to create your image. to verify it was created, you can run `docker images`.
+- To deploy the kubernetes config, run the command `helm install {any name} {name of folder created above for the helm chart}`.
+- Check your deployment by running `kubectl get pods`.
+
+
 
 
 ## Testing
-Under the **src/main** directory, there are Unit tests written using Spock. in the **test/resources** folder, a **mockCustomers.json** file is created for mock data purposes.
+Under the **src/main** directory, there are Unit tests written using Spock. in the **test/resources** folder, a **mockCustomers.json** file is created for mock data purposes. The tests can be ran individually in intelliJ or via terminal.
 
 
 ## Contact
